@@ -116,6 +116,10 @@ var tool = tiled.registerTool("GenerateCliffs", {
             return true;
         if (this.map.currentLayer.tileAt(x + 1, y) == null)
             return true;
+        if (this.map.currentLayer.tileAt(x, y + 1) == null)
+            return true;
+        if (this.map.currentLayer.tileAt(x, y - 1) == null)
+            return true;
         if (this.map.currentLayer.tileAt(x - 1, y + 1) == null)
             return true;
         if (this.map.currentLayer.tileAt(x + 1, y + 1) == null)
