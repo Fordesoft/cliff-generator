@@ -1,14 +1,14 @@
 # Install
 
-On Windows, put `cliffs.js` here:
+On Windows, put `cliffs.js` and `reset-cliffs.js` here:
 
 `C:\Users\YOUR_WINDOWS_USERNAME\AppData\Local\Tiled\extensions\cliff-generator`
 
-On Mac, put `cliffs.js` here:
+On Mac, put `cliffs.js` and `reset-cliffs.js` here:
 
 `~/Library/Preferences/Tiled/extensions/`
 
-On Linux, put `cliffs.js` here:
+On Linux, put `cliffs.js` and `reset-cliffs.js` here:
 
 `~/.config/tiled/extensions/`
 
