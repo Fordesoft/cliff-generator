@@ -12,6 +12,8 @@ On Linux, put `cliffs.js` here:
 
 `~/.config/tiled/extensions/`
 
+Alternatively, you can install your extensions in a project-specific location.  See https://doc.mapeditor.org/en/stable/reference/scripting/
+
 # Usage
 
 1. Paint some ground tiles on your map.
@@ -21,4 +23,3 @@ On Linux, put `cliffs.js` here:
 3. Click "Generate cliffs" on the toolbar.
 
 4. Click anywhere in your map once.
-
