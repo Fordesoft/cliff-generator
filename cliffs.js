@@ -1,4 +1,4 @@
-var tool = tiled.registerTool("PlaceRectangles", {
+var tool = tiled.registerTool("GenerateCliffs", {
     name: "Generate cliffs",
 
     mousePressed: function(button, xClick, yClick, modifiers) {
