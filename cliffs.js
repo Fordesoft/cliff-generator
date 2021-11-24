@@ -16,60 +16,55 @@ var tool = tiled.registerTool("GenerateCliffs", {
         for (var x = 0; x < this.map.width; x++)
             for (var y = 0; y < this.map.height; y++)
             {
-                // if this tile is empty...
-                if (this.map.currentLayer.tileAt(x, y) == null)
-                {
+                // if this is a ground tile and is an edge tile...
+                if (this.map.currentLayer.tileAt(x, y) != null && this.isEdge(x, y)) {
 
-                    // if there's a tile directly above it, place a tile here
-                    if (this.map.currentLayer.tileAt(x, y - 1) != null) {
-                        // if there tiles to the top-left and top-right (i.e., this is not a left/right edge), use the bottom middle
-                        if (this.map.currentLayer.tileAt(x - 1, y - 1) != null && this.map.currentLayer.tileAt(x + 1, y - 1) != null) {
-                            this.writeTileToBuffer(x, y, brush.tileAt(1, 2));
-                            // if there are tiles below the bottom-middle one in the tileset, put them below the tile we just placed (for up to 2 tiles atm-maybe expand this infinitely later via a loop, if there's demand)
-                            if (brush.tileAt(1, 3) != null)
-                                this.writeTileToBuffer(x, y + 1, brush.tileAt(1, 3));
-                            if (brush.tileAt(1, 4) != null)
-                                this.writeTileToBuffer(x, y + 2, brush.tileAt(1, 4));
-                        }
-                        // use the bottom left
-                        else if (this.map.currentLayer.tileAt(x + 1, y - 1) != null) {
-                            this.writeTileToBuffer(x, y, brush.tileAt(0, 2));
-                            // if there are tiles below the bottom-left one in the tileset, put them below the tile we just placed (for up to 2 tiles atm-maybe expand this infinitely later via a loop, if there's demand)
-                            if (brush.tileAt(0, 3) != null)
-                                this.writeTileToBuffer(x, y + 1, brush.tileAt(0, 3));
-                            if (brush.tileAt(0, 4) != null)
-                                this.writeTileToBuffer(x, y + 2, brush.tileAt(0, 4));
-                        }
-                        // bottom right
-                        else if (true) {
-                            this.writeTileToBuffer(x, y, brush.tileAt(2, 2));
-                            // if there are tiles below the bottom-right one in the tileset, put them below the tile we just placed (for up to 2 tiles atm-maybe expand this infinitely later via a loop, if there's demand)
-                            if (brush.tileAt(2, 3) != null)
-                                this.writeTileToBuffer(x, y + 1, brush.tileAt(2, 3));
-                            if (brush.tileAt(2, 4) != null)
-                                this.writeTileToBuffer(x, y + 2, brush.tileAt(2, 4));
-                        }   
+                    if (this.isBottomLeftCorner(x, y)) {
+                        this.writeTileToBuffer(x, y, brush.tileAt(0, 2));
+                        // if there are tiles below the bottom-left one in the tileset, put them below the tile we just placed (for up to 2 tiles atm-maybe expand this infinitely later via a loop, if there's demand)
+                        if (brush.tileAt(0, 3) != null)
+                            this.writeTileToBuffer(x, y + 1, brush.tileAt(0, 3));
+                        if (brush.tileAt(0, 4) != null)
+                            this.writeTileToBuffer(x, y + 2, brush.tileAt(0, 4));
                     }
-                    // if there's a tile down-left of it, place the "top-right" tile here.
-                    else if (this.map.currentLayer.tileAt(x - 1, y + 1) != null) {
-                        this.writeTileToBuffer(x, y, brush.tileAt(2, 0));
+
+                    else if (this.isBottomRightCorner(x, y)) {
+                        this.writeTileToBuffer(x, y, brush.tileAt(2, 2));
+                        // if there are tiles below the bottom-right one in the tileset, put them below the tile we just placed (for up to 2 tiles atm-maybe expand this infinitely later via a loop, if there's demand)
+                        if (brush.tileAt(2, 3) != null)
+                            this.writeTileToBuffer(x, y + 1, brush.tileAt(2, 3));
+                        if (brush.tileAt(2, 4) != null)
+                            this.writeTileToBuffer(x, y + 2, brush.tileAt(2, 4));
                     }
-                    // if there's a tile down-right of it, place the "top-left" tile here.
-                    else if (this.map.currentLayer.tileAt(x + 1, y + 1) != null) {
+
+                    else if (this.isBottomMiddle(x, y)) {
+                        this.writeTileToBuffer(x, y, brush.tileAt(1, 2));
+                        // if there are tiles below the bottom-middle one in the tileset, put them below the tile we just placed (for up to 2 tiles atm-maybe expand this infinitely later via a loop, if there's demand)
+                        if (brush.tileAt(1, 3) != null)
+                            this.writeTileToBuffer(x, y + 1, brush.tileAt(1, 3));
+                        if (brush.tileAt(1, 4) != null)
+                            this.writeTileToBuffer(x, y + 2, brush.tileAt(1, 4));
+                    }
+
+                    else if (this.isTopLeftCorner(x, y)) {
                         this.writeTileToBuffer(x, y, brush.tileAt(0, 0));
                     }
-                    // if there's a tile directly below it, place the "top middle" tile here.
-                    else if (this.map.currentLayer.tileAt(x, y + 1) != null)
+
+                    else if (this.isTopRightCorner(x, y)) {
+                        this.writeTileToBuffer(x, y, brush.tileAt(2, 0));
+                    }
+
+                    else if (this.isTopMiddle(x, y)) {
                         this.writeTileToBuffer(x, y, brush.tileAt(1, 0));
-                    // if there's a tile directly left of it, place the "right middle" tile here.
-                    else if (this.map.currentLayer.tileAt(x - 1, y ) != null)
+                    }
+
+                    else if (this.isLeftEdge(x, y)) {
+                        this.writeTileToBuffer(x, y, brush.tileAt(0, 1));
+                    }
+
+                    else if (this.isRightEdge(x, y)) {
                         this.writeTileToBuffer(x, y, brush.tileAt(2, 1));
-                    // if there's a tile directly right of it, place the "left middle" tile here.
-                    else if (this.map.currentLayer.tileAt(x + 1, y ) != null)
-                        this.writeTileToBuffer(x, y, brush.tileAt(0, 1));
-                    // if there's a tile directly right of it, place the "left middle" tile here.
-                    else if (this.map.currentLayer.tileAt(x + 1, y ) != null)
-                        this.writeTileToBuffer(x, y, brush.tileAt(0, 1));
+                    }
                 }
             }
 
@@ -110,5 +105,109 @@ var tool = tiled.registerTool("GenerateCliffs", {
             for (var y = 0; y < this.map.height; y++)
                 editor.setTile(x, y, this.tileBuffer[x][y]);
         editor.apply();
-    }
+    },
+
+    isEdge: function(x, y) {
+        if (this.map.currentLayer.tileAt(x - 1, y - 1) == null)
+            return true;
+        if (this.map.currentLayer.tileAt(x + 1, y - 1) == null)
+            return true;
+        if (this.map.currentLayer.tileAt(x - 1, y) == null)
+            return true;
+        if (this.map.currentLayer.tileAt(x + 1, y) == null)
+            return true;
+        if (this.map.currentLayer.tileAt(x - 1, y + 1) == null)
+            return true;
+        if (this.map.currentLayer.tileAt(x + 1, y + 1) == null)
+            return true;
+        return false;
+    },
+
+    isBottomLeftCorner: function(x, y) {
+        if (this.map.currentLayer.tileAt(x - 1, y) != null) // if a tile is to the left
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) != null) // if a tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) == null) // if no tile is above
+            return false;
+        return true;
+    },
+
+    isBottomRightCorner: function(x, y) {
+        if (this.map.currentLayer.tileAt(x + 1, y) != null) // if a tile is to the right
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) != null) // if a tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) == null) // if no tile is above
+            return false;
+        return true;
+    },
+
+    isBottomMiddle: function(x, y) {
+        if (this.map.currentLayer.tileAt(x + 1, y) == null) // if no tile is to the right
+            return false;
+        if (this.map.currentLayer.tileAt(x - 1, y) == null) // if no tile is to the left
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) != null) // if a tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) == null) // if no tile is above
+            return false;
+        return true;
+    },
+
+    isLeftEdge: function(x, y) {
+        if (this.map.currentLayer.tileAt(x - 1, y) != null) // if a tile is to the left
+            return false;
+        if (this.map.currentLayer.tileAt(x + 1, y) == null) // if no tile is to the right
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) == null) // if no tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) == null) // if no tile is above
+            return false;
+        return true;
+    },
+
+    isRightEdge: function(x, y) {
+        if (this.map.currentLayer.tileAt(x + 1, y) != null) // if a tile is to the right
+            return false;
+        if (this.map.currentLayer.tileAt(x - 1, y) == null) // if no tile is to the left
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) == null) // if no tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) == null) // if no tile is above
+            return false;
+        return true;
+    },
+
+    isTopLeftCorner: function(x, y) {
+        if (this.map.currentLayer.tileAt(x - 1, y) != null) // if a tile is to the left
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) == null) // if no tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) != null) // if a tile is above
+            return false;
+        return true;
+    },
+
+    isTopRightCorner: function(x, y) {
+        if (this.map.currentLayer.tileAt(x + 1, y) != null) // if a tile is to the right
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) == null) // if no tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) != null) // if a tile is above
+            return false;
+        return true;
+    },
+
+    isTopMiddle: function(x, y) {
+        if (this.map.currentLayer.tileAt(x + 1, y) == null) // if no tile is to the right
+            return false;
+        if (this.map.currentLayer.tileAt(x - 1, y) == null) // if no tile is to the left
+            return false;
+        if (this.map.currentLayer.tileAt(x, y + 1) == null) // if no tile is below
+            return false;
+        if (this.map.currentLayer.tileAt(x, y - 1) != null) // if a tile is above
+            return false;
+        return true;
+    },
 });
