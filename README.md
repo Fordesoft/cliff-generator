@@ -23,3 +23,5 @@ Alternatively, you can install your extensions in a project-specific location.  
 3. Click "Generate cliffs" on the toolbar.
 
 4. Click anywhere in your map once.
+
+[![demonstration-gif](./demonstration.gif)
