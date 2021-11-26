@@ -37,3 +37,10 @@ To reset your cliffs, the process is similar to steps 2-4 above.  But specifical
 2. Click "Reset cliffs" on the toolbar.
 
 3. Click anywhere in your map once.
+
+# Roadmap
+
+One improvement that could be made here is to add support for these four transition tiles that are circled in the screenshot below.  I'm not sure what they're called, but they're very typical in tilesets like these.  The screenshot shows where the selected tile would be placed.
+![next-feature-needed](./next-feature-needed.png)
+
+For now, those tiles still need to be placed automatically (in tilesets where they're necessary - which is probably most of them).
