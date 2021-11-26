@@ -24,4 +24,4 @@ Alternatively, you can install your extensions in a project-specific location.  
 
 4. Click anywhere in your map once.
 
-[![demonstration-gif](./demonstration.gif)
+![demonstration-gif](./demonstration.gif)
